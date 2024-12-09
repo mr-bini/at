@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Attack Hub - API Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        /* Custom responsive styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -250px;
+                height: 100vh;
+                width: 250px;
+                transition: left 0.3s ease;
+                z-index: 1000;
+            }
+            .sidebar.active {
+                left: 0;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .api-methods-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .responsive-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="flex flex-col md:flex-row h-screen">
+        <!-- Mobile Header -->
+        <div class="md:hidden bg-gray-800 p-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-rocket text-blue-500 text-2xl mr-2"></i>
+                <span class="text-xl font-bold">HUBS</span>
+            </div>
+            <button id="mobile-menu-toggle" class="text-white mobile-menu-toggle">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar w-64 bg-gray-800 p-4 flex flex-col justify-between fixed md:relative">
+            <div>
+                <div class="hidden md:flex items-center mb-6">
+                    <i class="fas fa-rocket text-blue-500 text-2xl"></i>
+                    <span class="ml-2 text-xl font-bold">HUBS</span>
+                </div>
+                
+                <nav>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="dashboard.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                text-gray-400 hover:text-white hover:bg-gray-700">
+                                <i class="fas fa-tachometer-alt mr-3 w-5 text-center"></i>
+                                <span class="flex-1">Dashboard</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="stresspanel.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                text-gray-400 hover:text-white hover:bg-gray-700">
+                                <i class="fas fa-bolt mr-3 w-5 text-center"></i>
+                                <span class="flex-1">Stress Panel</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="apimanager.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                text-white bg-purple-600 hover:bg-purple-700">
+                                <i class="fas fa-cogs mr-3 w-5 text-center"></i>
+                                <span class="flex-1">API Manager</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Upgrade Section -->
+                    <div class="mt-6">
+                        <h3 class="text-gray-500 uppercase text-xs px-2 mb-2">Upgrade</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="deposit.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                    text-gray-400 hover:text-white hover:bg-gray-700">
+                                    <i class="fas fa-wallet mr-3 w-5 text-center"></i>
+                                    <span class="flex-1">Deposit</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href="addons.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                    text-gray-400 hover:text-white hover:bg-gray-700">
+                                    <i class="fas fa-puzzle-piece mr-3 w-5 text-center"></i>
+                                    <span class="flex-1">Addons</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Others Section -->
+                    <div class="mt-6">
+                        <h3 class="text-gray-500 uppercase text-xs px-2 mb-2">Others</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="tools.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                    text-gray-400 hover:text-white hover:bg-gray-700">
+                                    <i class="fas fa-tools mr-3 w-5 text-center"></i>
+                                    <span class="flex-1">Tools</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Language Selector -->
+            <div class="mt-6 border-t border-gray-700 pt-4">
+                <div class="flex items-center justify-between px-2">
+                    <div class="flex items-center space-x-2">
+                        <img src="https://storage.googleapis.com/a1aa/image/Hj9LrhwTmWZ5I5f5tuT8xcoxamhWNS8OHxy44eQ8vdcMuQ4TA.jpg" 
+                             alt="English flag" class="w-5 h-5 rounded-full"/>
+                        <span class="text-sm">EN</span>
+                    </div>
+                    
+                    <div class="text-gray-500 mx-2">|</div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <img src="https://storage.googleapis.com/a1aa/image/m3USNS1SXWrVA15sTZwixHwgB9JkF4SjxH4zousCWguiLEeJA.jpg" 
+                             alt="Other language flag" class="w-5 h-5 rounded-full"/>
+                        <span class="text-sm">Other</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-4 md:p-6 main-content overflow-y-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold mb-4 md:mb-0">Purchase</h1>
+                <div class="flex items-center space-x-4">
+                    <span>Mert</span>
+                    <span>Balance: 500$</span>
+                    <img alt="User Avatar" class ="h-10 w-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/zK6wQOaAnnLxF9pdRdDe6RlSvCh67Rx9eq2YhwdPaAyykQ4TA.jpg" width="40"/>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 p-4 rounde d-lg mb-6">
+                <div class="flex mb-4">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded mr-2">Start (L4)</button>
+                    <button class="bg-gray-700 text-white px-4 py-2 rounded mr-2">Start (L7)</button>
+                    <button class="bg-gray-700 text-white px-4 py-2 rounded mr-2">Stop (With ID)</button>
+                    <button class="bg-gray-700 text-white px-4 py-2 rounded">Stop All</button>
+                </div>
+                <p class="mb-4">Below you can find an example on how to start a Layer 4 attack using API.</p>
+                <div class="bg-gray-700 p-4 rounded mb-4">
+                    <span class="bg-green-600 text-white px-2 py-1 rounded">GET</span>
+                    <span class="ml-2">No API Key available</span>
+                </div>
+                <table class="w-full text-left mb-4 responsive-table">
+                    <thead>
+                        <tr>
+                            <th class="py-2">PARAMETER</th>
+                            <th class="py-2">DESCRIPTION</th>
+                            <th class="py-2">EXAMPLE</th>
+                            <th class="py-2">REQUIRED</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2">host</td>
+                            <td class="py-2">Target IP/Subnet Range</td>
+                            <td class="py-2">70.70.70.72 or 70.70.70.72/24</td>
+                            <td class="py-2 text-green-500"><i class="fas fa-check-circle"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="py-2">port</td>
+                            <td class="py-2">Destination port</td>
+                            <td class="py-2">80, 22, 30120</td>
+                            <td class="py-2 text-green-500"><i class="fas fa-check-circle"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="py-2">time</td>
+                            <td class="py-2">Duration of the flood (Seconds)</td>
+                            <td class="py-2">Minimum 30, Maximum time provided in your plan.</td>
+                            <td class="py-2 text-green-500"><i class="fas fa-check-circle"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="py-2">method</td>
+                            <td class="py-2">Method to be used on the attack</td>
+                            <td class="py-2">U can see all the attack methods on the chart shown to the left.</td>
+                            <td class="py-2 text-green-500"><i class="fas fa-check-circle"></i></td>
+                        </tr>
+                        <tr>
+                            <td class="py-2">slots</td>
+                            <td class="py-2">Amount of slots to be executed for the attack</td>
+                            <td class="py-2">59</td>
+                            <td class="py-2 text-red-500"><i class="fas fa-times-circle"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="flex">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded mr-2">Generate Token</button>
+                    <button class="bg-red-600 text-white px-4 py-2 rounded">Remove Token</button>
+                </div>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg mb-6">
+                <h2 class="text-xl font-bold mb-4">API Methods</h2>
+                <div class="grid grid-cols-2 gap-4 api-methods-grid">
+                    <div>
+                        <h3 class="font-bold">Amplification (AMP):</h3>
+                        <p>DNS SADP NTP MIXAMP WSD STUN</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold">User  Datagram Protocol (UDP):</h3>
+                        <p>UDP-PPS UDP-A2S UDP-RANKET UDP-VSE</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold">Transmission Control Protocol (TCP):</h3>
+                        <p>TCP-SAF TCP-TLS TCP-ACK TCP-S YN TCP-TFO</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold">SSL (HTTPS & HTTP) FLOODS:</h3>
+                        <p>HTTP-APOLLO</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold">Special Methods:</h3>
+                        <p>DISCORD OPENVPN TEAMSPEAK3 OVHACK TCP-MIX</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold">Specific Game methods (UDP/TCP):</h3>
+                        <p>FIVEM SAMP DAYZ PUBG R6 WARZONE</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg">
+                <h2 class="text-xl font-bold mb-4">Authorized IPs</h2>
+                <div class="mb-4">
+                    <input class="bg-gray-700 text-white p-2 rounded w-full mb-2" placeholder="IP address" type="text"/>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded">Submit</button>
+                </div>
+                <div class="mb-4">
+                    <label class="mr-2" for="entries">Show</label>
+                    <select class="bg-gray-700 text-white p-2 rounded" id="entries">
+                        <option>10</option>
+                        <option>25</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+                    <span class="ml-2">entries</span>
+                </div>
+                <table class="w-full text-left">
+                    <thead>
+                        <tr>
+                            <th class="py-2">IP</th>
+                            <th class="py-2">ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2" colspan="2">No data available in table</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="flex justify-between mt-4">
+                    <span>Showing 0 to 0 of 0 entries</span>
+                    <div>
+                        <button class="bg-gray-700 text-white px-4 py-2 rounded mr-2">Previous</button>
+                        <button class="bg-gray-700 text-white px-4 py-2 rounded">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Mobile menu toggle functionality
+        document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+    </script>
+</body>
+</html> 

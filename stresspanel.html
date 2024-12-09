@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Attack Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        /* Custom responsive styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -250px;
+                height: 100vh;
+                width: 250px;
+                transition: left 0.3s ease;
+                z-index: 1000;
+            }
+            .sidebar.active {
+                left: 0;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .attack-container {
+                flex-direction: column;
+            }
+            .attack-form, .attacks-list {
+                width: 100% !important;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="flex flex-col md:flex-row h-screen">
+        <!-- Mobile Header -->
+        <div class="md:hidden bg-gray-800 p-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-rocket text-blue-500 text-2xl mr-2"></i>
+                <span class="text-xl font-bold">HUBS</span>
+            </div>
+            <button id="mobile-menu-toggle" class="text-white mobile-menu-toggle">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar w-64 bg-gray-800 p-4 flex flex-col justify-between fixed md:relative">
+            <div>
+                <div class="hidden md:flex items-center mb-6">
+                    <i class="fas fa-rocket text-blue-500 text-2xl"></i>
+                    <span class="ml-2 text-xl font-bold">HUBS</span>
+                </div>
+                
+                <nav>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="dashboard.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                text-gray-400 hover:text-white hover:bg-gray-700">
+                                <i class="fas fa-tachometer-alt mr-3 w-5 text-center"></i>
+                                <span class="flex-1">Dashboard</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="stresspanel.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                text-white bg-purple-600 hover:bg-purple-700">
+                                <i class="fas fa-bolt mr-3 w-5 text-center"></i>
+                                <span class="flex-1">Stress Panel</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="apimanager.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                text-gray-400 hover:text-white hover:bg-gray-700">
+                                <i class="fas fa-cogs mr-3 w-5 text-center"></i>
+                                <span class="flex-1">API Manager</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Upgrade Section -->
+                    <div class="mt-6">
+                        <h3 class="text-gray-500 uppercase text-xs px-2 mb-2">Upgrade</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="deposit.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                    text-gray-400 hover:text-white hover:bg-gray-700">
+                                    <i class="fas fa-wallet mr-3 w-5 text-center"></i>
+                                    <span class="flex-1">Deposit</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href="addons.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                    text-gray-400 hover:text-white hover:bg-gray-700">
+                                    <i class="fas fa-puzzle-piece mr-3 w-5 text-center"></i>
+                                    <span class="flex-1">Addons</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Others Section -->
+                    <div class="mt-6">
+                        <h3 class="text-gray-500 uppercase text-xs px-2 mb-2">Others</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="tools.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                    text-gray-400 hover:text-white hover:bg-gray-700">
+                                    <i class="fas fa-tools mr-3 w-5 text-center"></i>
+                                    <span class="flex-1">Tools</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Language Selector -->
+            <div class="mt-6 border-t border-gray-700 pt-4">
+                <div class="flex items-center justify-between px-2">
+                    <div class="flex items-center space-x-2">
+                        <img src="https://storage.googleapis.com/a1aa/image/Hj9LrhwTmWZ5I5f5tuT8xcoxamhWNS8OHxy44eQ8vdcMuQ4TA.jpg" 
+                             alt="English flag" class="w-5 h-5 rounded-full"/>
+                        <span class="text-sm">EN</span>
+                    </div>
+                    
+                    <div class="text-gray-500 mx-2">|</div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <img src="https://storage.googleapis.com/a1aa/image/m3USNS1SXWrVA15sTZwixHwgB9JkF4SjxH4zousCWguiLEeJA.jpg" 
+                             alt="Other language flag" class="w-5 h-5 rounded-full"/>
+                        <span class="text-sm">Other</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content flex-1 p-4">
+            <h1 class="text-3xl font-bold mb-4">Stress Test Hub</h1>
+            <div class="attack-container flex flex-col md:flex-row">
+                <div class="attack-form flex-1 bg-gray-800 p-4 rounded-lg shadow-md">
+                    <h2 class="text-xl font-semibold mb-4">Attack Configuration</h2>
+                    
+                    <div class="flex space-x-2 mb-4">
+                        <button id="free-hub-btn" class="layer-btn bg-purple-600 text-white py-2 px-4 rounded">Free Hub</button>
+                        <button id="layer-34-btn" class="layer-btn bg-gray-600 text-white py-2 px-4 rounded">Layer 3/4</button>
+                        <button id="layer-7-btn" class="layer-btn bg-gray-600 text-white py-2 px-4 rounded">Layer 7</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="mb-4">
+                            <label class="block text-gray-400 mb-2" for="target">Target</label>
+                            <input 
+                                class="w-full p-2 bg-gray-700 text-white rounded" 
+                                id="target" 
+                                placeholder="URL (e.g., https://website.com)" 
+                                type="text"
+                                pattern="^(https?://)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([/\\w \\.-]*)*/?$"
+                                required
+                            >
+                            <small id="target-error" class="text-red-500 hidden">Please enter a valid URL</small>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-400 mb-2" for="time">Attack Duration (seconds)</label>
+                            <div class="flex items-center">
+                                <input 
+                                    class="w-full p-2 bg-gray-700 text-white rounded mr-2" 
+                                    id="time" 
+                                    type="number" 
+                                    min="10" 
+                                    max="3600" 
+                                    value="300"
+                                >
+                                <span class="text-gray-400">Max: 1hr</span>
+                            </div>
+                            <small class="text-gray-500 text-xs">Minimum 10s, Maximum 1 hour</small>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-400 mb-2" for="attack-method">Attack Method</label>
+                        <select 
+                            class="w-full p-2 bg-gray-700 text-white rounded" 
+                            id="attack-method"
+                        >
+                            <optgroup label="Free Methods">
+                                <option value="nova-http2">NOVA - HTTP/2 Flooder + TLS1.3</option>
+                                <option value="simple-get">Simple GET Flood</option>
+                            </optgroup>
+                            <optgroup label="Premium Methods" disabled>
+                                <option value="advanced-nova">Advanced NOVA + Query Injection</option>
+                                <option value="layer4-syn">SYN Flood</option>
+                                <option value="layer7-complex">Complex Layer 7 Method</option>
+                            </optgroup>
+                        </select>
+                        <small class="text-yellow-500 text-xs">Premium methods require Platinum upgrade By only 300$</small>
+                    </div>
+
+                    <button id="send-attack-btn" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
+                        Send Attack
+                    </button>
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // Premium User Check Function
+        function checkPremiumAccess() {
+            const isPremiumUser  = false; // Change to true for premium users
+
+            if (!isPremiumUser ) {
+                const overlay = document.createElement('div');
+                overlay.className = 'premium-overlay';
+                overlay.innerHTML = `
+                    <div class="premium-modal">
+                        <h2 class="text-2xl font-bold text-red-500 mb-4">Platinum Access Required</h2>
+                        <p class="mb-4">This feature is only available for Platinum users.</p>
+                        <div class="flex justify-center space-x-4">
+                            <button id="close-premium-modal" class="bg-gray-600 text-white py-2 px-4 rounded">Close</button>
+                            <button id="upgrade-premium" class="bg-purple-600 text-white py-2 px-4 rounded">Upgrade to Platinum</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+
+                document.getElementById('close-premium-modal').addEventListener('click', () => {
+                    document.body.removeChild(overlay);
+                });
+
+                document.getElementById('upgrade-premium').addEventListener('click', () => {
+                    window.location.href = 'deposit.html';
+                });
+
+                return false;
+            }
+            return true;
+        }
+
+        // Layer button toggle functionality
+        const layerButtons = document.querySelectorAll('.layer-btn');
+        layerButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                layerButtons.forEach(btn => {
+                    btn.classList.remove('bg-purple-600');
+                    btn.classList.add('bg-gray-600');
+                });
+                this.classList.remove('bg-gray-600');
+                this.classList.add('bg-purple-600');
+
+                if (this.id === 'layer-34-btn' || this.id === 'layer-7-btn') {
+                    checkPremiumAccess();
+                }
+            });
+        });
+
+        // Send attack button functionality
+        document.getElementById('send-attack-btn').addEventListener('click', function() {
+            const freeHubBtn = document.getElementById('free-hub-btn');
+            const layer34Btn = document.getElementById('layer-34-btn');
+            const layer7Btn = document.getElementById('layer-7-btn');
+
+            if (freeHubBtn.classList.contains('bg-purple-600')) {
+                showNotification('Attack sent successfully!');
+            } else if (layer34Btn.classList.contains('bg-purple-600')) {
+                if (!checkPremiumAccess()) {
+                    return;
+                }
+            } else if (layer7Btn.classList.contains('bg-purple-600')) {
+                if (!checkPremiumAccess()) {
+                    return;
+                }
+            }
+        });
+
+        // Helper function to show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification fixed top-4 right-4 bg-green-500 text-white p-4 rounded shadow-lg z-50';
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 3000);
+        }
+
+        // Mobile menu toggle functionality
+        document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Target URL Validation
+        const targetInput = document.getElementById('target');
+        const targetError = document.getElementById('target-error');
+
+        targetInput.addEventListener('input', function() {
+            const urlPattern = /^(https?:\/\/)?([da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+            
+            if (!urlPattern.test(this.value)) {
+                targetError.classList.remove('hidden');
+                this.classList.add('border-red-500');
+            } else {
+                targetError.classList.add('hidden');
+                this.classList.remove('border-red-500');
+            }
+        });
+
+        // Time Input Validation
+        const timeInput = document.getElementById('time');
+
+        timeInput.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            
+            if (value < 10) {
+                this.value = 10;
+            } else if (value > 3600) {
+                this.value = 3600;
+            }
+        });
+
+        // Attack Method Selection
+        const attackMethodSelect = document.getElementById('attack-method');
+
+        attackMethodSelect.addEventListener('change', function() {
+            const selectedMethod = this.value;
+            
+            // Check if selected method is premium
+            const premiumMethods = ['advanced-nova', 'layer4-syn', 'layer7-complex'];
+            
+            if (premiumMethods.includes(selectedMethod)) {
+                // Trigger premium check
+                if (!checkPremiumAccess()) {
+                    // Reset to first free method
+                    this.value = 'nova-http2';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

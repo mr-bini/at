@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Attack Hub - Addons</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        /* Custom responsive styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -250px;
+                height: 100vh;
+                width: 250px;
+                transition: left 0.3s ease;
+                z-index: 1000;
+            }
+            .sidebar.active {
+                left: 0;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .footer {
+                position: relative;
+                bottom: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+    <div class="flex flex-1">
+        <!-- Mobile Header -->
+        <div class="md:hidden bg-gray-800 p-4 fixed top-0 left-0 right-0 z-50 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-rocket text-blue-500 text-2xl mr-2"></i>
+                <span class="text-xl font-bold">HUBS</span>
+            </div>
+            <button id="mobile-menu-toggle" class="text-white mobile-menu-toggle">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar w-64 bg-gray-800 p-4 flex flex-col justify-between fixed md:relative mt-16 md:mt-0">
+            <div>
+                <div class="hidden md:flex items-center mb-6">
+                    <i class="fas fa-rocket text-blue-500 text-2xl"></i>
+                    <span class="ml-2 text-xl font-bold">HUBS</span>
+                </div>
+                
+                <nav>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="dashboard.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                text-gray-400 hover:text-white hover:bg-gray-700">
+                                <i class="fas fa-tachometer-alt mr-3 w-5 text-center"></i>
+                                <span class="flex-1">Dashboard</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="stresspanel.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                text-gray-400 hover:text-white hover:bg-gray-700">
+                                <i class="fas fa-bolt mr-3 w-5 text-center"></i>
+                                <span class="flex-1">Stress Panel</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="apimanager.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                text-gray-400 hover:text-white hover:bg-gray-700">
+                                <i class="fas fa-cogs mr-3 w-5 text-center"></i>
+                                <span class="flex-1">API Manager</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Upgrade Section -->
+                    <div class="mt-6">
+                        <h3 class="text-gray-500 uppercase text-xs px-2 mb-2">Upgrade</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="deposit.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                    text-gray-400 hover:text-white hover:bg-gray-700">
+                                    <i class="fas fa-wallet mr-3 w-5 text-center"></i>
+                                    <span class="flex-1">Deposit</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href="addons.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                    text-white bg-purple-600 hover:bg-purple-700">
+                                    <i class="fas fa-puzzle-piece mr-3 w-5 text-center"></i>
+                                    <span class="flex-1">Addons</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Others Section -->
+                    <div class="mt-6">
+                        <h3 class="text-gray-500 uppercase text-xs px-2 mb-2">Others</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="tools.html" class="flex items-center p-2 rounded transition-colors duration-200 
+                                    text-gray-400 hover:text-white hover:bg-gray-700">
+                                    <i class="fas fa-tools mr-3 w-5 text-center"></i>
+                                    <span class="flex-1">Tools</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Language Selector -->
+            <div class="mt-6 border-t border-gray-700 pt-4">
+                <div class="flex items-center justify-between px-2">
+                    <div class="flex items-center space-x-2">
+                        <img src="https://storage.googleapis.com/a1aa/image/Hj9LrhwTmWZ5I5f5tuT8xcoxamhWNS8OHxy44eQ8vdcMuQ4TA.jpg" 
+                             alt="English flag" class="w-5 h-5 rounded-full"/>
+                        <span class="text-sm">EN</span>
+                    </div>
+                    
+                    <div class="text-gray-500 mx-2">|</div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <img src="https://storage.googleapis.com/a1aa/image/m3USNS1SXWrVA15sTZwixHwgB9JkF4SjxH4zousCWguiLEeJA.jpg" 
+                             alt="Other language flag" class="w-5 h-5 rounded-full"/>
+                        <span class="text-sm">Other</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-4 md:p-6 main-content overflow-y-auto md:mt-0 mt-16">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold mb-4 md:mb-0">Purchase</h1>
+                <div class="flex items-center space-x-4">
+                    <span>Mert</span>
+                    <span>Balance: 500$</span>
+                    <img alt="User Avatar" class ="h-10 w-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/zK6wQOaAnnLxF9pdRdDe6RlSvCh67Rx9eq2YhwdPaAyykQ4TA.jpg" width="40"/>
+                </div>
+            </div>
+            <div class="bg-red-600 text-white p-4 rounded mb-6">
+                NOTE: You need to have an active plan in order to use addons!
+            </div>
+            <div class="bg-gray-800 p-6 rounded">
+                <h2 class="text-xl font-semibold mb-4">Select Addon</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-400" for="addon">Addon</label>
+                        <input class="w-full p-2 bg-gray-700 text-white rounded" id="addon" readonly type="text" value="Concurrents"/>
+                    </div>
+                    <div>
+                        <label class="block text-gray-400" for="concurrents">Concurrents 1</label>
+                        <input class="w-full p-2 bg-gray-700 text-white rounded" id="concurrents" readonly type="text" value="1"/>
+                    </div>
+                </div>
+                <button class="mt-6 w-full bg-purple-600 text-white py-2 rounded">$19.00/month</button>
+            </div>
+        </div>
+    </div>
+    <footer class="footer w-full text-center text-gray-500 text-sm p-4">
+        Copyright © 2024 LKKSTRESS.SU. All rights reserved.
+    </footer>
+    <script>
+        // Mobile menu toggle functionality
+        document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+    </script>
+</body>
+</html> 

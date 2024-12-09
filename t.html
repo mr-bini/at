@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Attack Hub Pro</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        /* Smooth scrolling and custom scrollbar */
+        html {
+            scroll-behavior: smooth;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
+        }
+        
+        /* Animated hover effects */
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar with Advanced Navigation -->
+        <div class="w-64 bg-gray-800 p-4 flex flex-col justify-between shadow-2xl">
+            <div>
+                <div class="flex items-center mb-6 animate-pulse">
+                    <i class="fas fa-rocket text-blue-500 text-2xl"></i>
+                    <span class="ml-2 text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
+                        HUBS PRO
+                    </span>
+                </div>
+                
+                <!-- Dynamic Navigation with Dropdown -->
+                <nav id="mainNavigation">
+                    <style>
+                        :root {
+                            --bg-dark: #1f2937;
+                            --bg-darker: #111827;
+                            --text-primary: #ffffff;
+                            --text-secondary: #9ca3af;
+                            --accent-color: #7c3aed;
+                            --hover-bg: #374151;
+                        }
+                
+                        * {
+                            margin: 0;
+                            padding: 0;
+                            box-sizing: border-box;
+                        }
+                
+                        body {
+                            font-family: 'Arial', sans-serif;
+                            background-color: var(--bg-darker);
+                            color: var(--text-primary);
+                        }
+                
+                        .sidebar-navigation {
+                            width: 250px;
+                            height: 100vh;
+                            background-color: var(--bg-dark);
+                            padding: 20px;
+                            display: flex;
+                            flex-direction: column;
+                        }
+                
+                        .navigation-section {
+                            margin-bottom: 20px;
+                        }
+                
+                        .section-title {
+                            color: var(--text-secondary);
+                            text-transform: uppercase;
+                            font-size: 0.75rem;
+                            margin-bottom: 10px;
+                        }
+                
+                        .navigation-list {
+                            list-style: none;
+                        }
+                
+                        .nav-item {
+                            margin-bottom: 10px;
+                            position: relative;
+                        }
+                
+                        .nav-link {
+                            display: flex;
+                            align-items: center;
+                            padding: 10px;
+                            text-decoration: none;
+                            color: var(--text-secondary);
+                            border-radius: 8px;
+                            transition: all 0.3s ease;
+                        }
+                
+                        .nav-link:hover {
+                            background-color: var(--hover-bg);
+                            color: var(--text-primary);
+                        }
+                
+                        .nav-link.active {
+                            background-color: var(--accent-color);
+                            color: var(--text-primary);
+                        }
+                
+                        .nav-icon {
+                            margin-right: 10px;
+                            width: 20px;
+                            text-align: center;
+                        }
+                
+                        .nav-badge {
+                            margin-left: auto;
+                            background-color: #10b981;
+                            color: white;
+                            font-size: 0.7rem;
+                            padding: 2px 6px;
+                            border-radius: 12px;
+                        }
+                
+                        /* Dropdown Styles */
+                        .dropdown {
+                            position: relative;
+                        }
+                
+                        .dropdown-toggle {
+                            margin-left: auto;
+                            font-size: 0.7rem;
+                            transition: transform 0.3s ease;
+                        }
+                
+                        .dropdown:hover .dropdown-toggle {
+                            transform: rotate(180deg);
+                        }
+                
+                        .dropdown-menu {
+                            display: none;
+                            position: absolute;
+                            left: 100%;
+                            top: 0;
+                            background-color: var(--bg-darker);
+                            min-width: 200px;
+                            border-radius: 8px;
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                            z-index: 10;
+                        }
+                
+                        .dropdown:hover .dropdown-menu {
+                            display: block;
+                        }
+                
+                        .dropdown-menu a {
+                            display: block;
+                            padding: 10px;
+                            color: var(--text-secondary);
+                            text-decoration: none;
+                        }
+                
+                        .dropdown-menu a:hover {
+                            background-color: var(--hover-bg);
+                            color: var(--text-primary);
+                        }
+                
+                        /* Language Switcher */
+                        .language-switcher {
+                            margin-top: auto;
+                            border-top: 1px solid var(--hover-bg);
+                            padding-top: 15px;
+                        }
+                
+                        .language-options {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+                
+                        .language-item {
+                            display: flex;
+                            align-items: center;
+                            cursor: pointer;
+                            padding: 5px;
+                            border-radius: 6px;
+                            transition: background-color 0.3s ease;
+                        }
+                
+                        .language-item:hover {
+                            background-color: var(--hover-bg);
+                        }
+                
+                        .language-flag {
+                            width: 24px;
+                            height: 24px;
+                            border-radius: 50%;
+                            margin-right: 5px;
+                        }
+                
+                        .language-divider {
+                            color: var(--text-secondary);
+                        }
+                    </style>
+                </head>
+                <body>
+                    <nav class="sidebar-navigation">
+                        <!-- Main Navigation Section -->
+                        <div class="navigation-section">
+                            <ul class="navigation-list">
+                                <!-- Dashboard Link -->
+                                <li class="nav-item">
+                                    <a href="dashboard.html" class="nav-link active">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        Dashboard
+                                        <span class="nav-badge">3</span>
+                                    </a>
+                                </li>
+                
+                                <!-- Stress Panel with Dropdown -->
+                                <li class="nav-item dropdown">
+                                    <a href="stresspanel.html" class="nav-link">
+                                        <i class="nav-icon fas fa-bolt"></i>
+                                        Stress Panel
+                                        <i class="dropdown-toggle fas fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="stresspanel-layer4.html">Layer 4 Attacks</a></li>
+                                        <li><a href="stresspanel-layer7.html">Layer 7 Attacks</a></li>
+                                    </ul>
+                                </li>
+                
+                                <!-- API Manager -->
+                                <li class="nav-item">
+                                    <a href="apimanager.html" class="nav-link">
+                                        <i class="nav-icon fas fa-cogs"></i>
+                                        API Manager
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                
+                        <!-- Upgrade Section -->
+                        <div class="navigation-section">
+                            <h3 class="section-title">Upgrade</h3>
+                            <ul class="navigation-list">
+                                <li class="nav-item">
+                                    <a href="deposit.html" class="nav-link">
+                                        <i class="nav-icon fas fa-wallet"></i>
+                                        Deposit
+                                        <span class="nav-badge">New</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="addons.html" class="nav-link">
+                                        <i class="nav-icon fas fa-puzzle-piece"></i>
+                                        Addons
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                
+                        <!-- Others Section -->
+                        <div class="navigation-section">
+                            <h3 class="section-title">Others</h3>
+                            <ul class="navigation-list">
+                                <li class="nav-item">
+                                    <a href="tools.html" class="nav-link">
+                                        <i class="nav-icon fas fa-tools"></i>
+                                        Tools
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                
+                        <!-- Language Switcher -->
+                        <div class="language-switcher">
+                            <div class="language-options">
+                                <div class="language-item">
+                                    <img src="https://storage.googleapis.com/a1aa/image/Hj9LrhwTmWZ5I5f5tuT8xcoxamhWNS8OHxy44eQ8 vdcMuQ4TA.jpg" alt="English" class="language-flag"/>
+                                    <span class="language-code">EN</span>
+                                </div>
+                                <div class="language-divider">|</div>
+                                <div class="language-item">
+                                    <img src="https://storage.googleapis.com/a1aa/image/m3USNS1SXWrVA15sTZwixHwgB9JkF4SjxH4zousCWguiLEeJA.jpg" alt="Other" class="language-flag"/>
+                                    <span class="language-code">Other</span>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                
+                    <!-- Optional JavaScript for Dropdown Functionality -->
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const dropdowns = document.querySelectorAll('.dropdown');
+                            dropdowns.forEach(dropdown => {
+                                dropdown.addEventListener('mouseenter', () => {
+                                    dropdown.querySelector('.dropdown-menu').style.display = 'block';
+                                });
+                                dropdown.addEventListener('mouseleave', () => {
+                                    dropdown.querySelector('.dropdown-menu').style.display = 'none';
+                                });
+                            });
+                        });
+                    </script>
+                </nav>
+            </div>
+            
+            <!-- Language Switcher with Advanced Styling -->
+            <div class="flex items-center justify-between bg-gray-700 rounded-lg p-2">
+                <div class="flex items-center cursor-pointer hover:bg-gray-600 rounded p-1">
+                    <img alt="English flag" class="mr-2 w-5 h-5 rounded-full" src="https://storage.googleapis.com/a1aa/image/Hj9LrhwTmWZ5I5f5tuT8xcoxamhWNS8OHxy44eQ8vdcMuQ4TA.jpg"/>
+                    <span class="text-sm">EN</span>
+                </div>
+                <div class="text-gray-500">|</div>
+                <div class="flex items-center cursor-pointer hover:bg-gray-600 rounded p-1">
+                    <img alt="Other language flag" class="mr-2 w-5 h-5 rounded-full" src="https://storage.googleapis.com/a1aa/image/m3USNS1SXWrVA15sTZwixHwgB9JkF4SjxH4zousCWguiLEeJA.jpg"/>
+                    <span class="text-sm">Other</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div class="flex-1 overflow-y-auto p-6">
+            <!-- Header with User Profile and Notifications -->
+            <header class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
+                    Dashboard
+                </h1>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Notification Bell -->
+                    <div class="relative">
+                        <button id="notificationBtn" class="text-gray-300 hover:text-white">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-1 text-xs">3</span>
+                        </button>
+                    </div>
+                    
+                    <!-- User Profile Dropdown -->
+                    <div class="relative group">
+                        <img alt="User Avatar" class="w-10 h-10 rounded-full cursor-pointer" 
+                             src="https://storage.googleapis.com/a1aa/image/ddlJTtGchQ66N9eJmE6j8YDVmJqgKTHYi8gs7ZK272JbWI8JA.jpg"/>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="absolute hidden group-hover:block right-0 mt-2 w-48 bg-gray-700 rounded-md shadow-lg z-10">
+                            <ul>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-gray-600">Profile</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-gray-600">Settings</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-gray-600">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Rest of your existing dashboard content -->
+            <!-- ... (keep your existing dashboard sections) ... -->
+        </div>
+    </div>
+
+    <!-- Advanced JavaScript -->
+    <script>
+        // Dynamic Navigation Generation
+        function generateNavigation() {
+            const navItems = [
+                { icon: 'fa-tachometer-alt', text: 'Dashboard', href: 'dashboard.html', active: true },
+                { icon: 'fa-bolt', text: 'Stress Panel', href: 'stresspanel.html' },
+                { icon: 'fa-cogs', text: 'API Manager', href: 'apimanager.html' }
+            ];
+
+            const navContainer = document.getElementById('mainNavigation');
+            const navList = document.createElement('ul');
+
+            navItems.forEach(item => {
+                const li = document.createElement('li');
+                li.classList.add('mb-4');
+                
+                const a = document.createElement('a');
+                a.href = item.href;
+                a.classList.add(
+                    'flex', 'items-center', 
+                    item.active ? 'text-white bg-purple-600' : 'text-gray-400 hover:text-white',
+                    'p-2', 'rounded', 'transition', 'duration-300'
+                );
+
+                const icon = document.createElement('i');
+                icon.classList.add('fas', item.icon, 'mr-3');
+
+                a.appendChild(icon);
+                a.appendChild(document.createTextNode(item.text));
+                li.appendChild(a);
+                navList.appendChild(li);
+            });
+
+            navContainer.appendChild(navList);
+        }
+
+        // Initialize Dynamic Components
+        document.addEventListener('DOMContentLoaded', () => {
+            generateNavigation();
+        });
+
+        // Notification System
+        document.getElementById('notificationBtn').addEventListener('click', () => {
+            alert('You have 3 new notifications!');
+        });
+    </script>
+</body>
+</html>
