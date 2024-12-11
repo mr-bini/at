@@ -1,4 +1,4 @@
-
+mr robot:
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,9 +36,28 @@
                 margin-bottom: 1rem;
             }
         }
+
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4caf50; /* Green */
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
 <body class="bg-gray-900 text-white">
     <div class="flex flex-col md:flex-row h-screen">
         <!-- Mobile Header -->
@@ -52,7 +71,7 @@
             </button>
         </div>
 
-        <!-- Sidebar -->
+<!-- Sidebar -->
         <div id="sidebar" class="sidebar w-64 bg-gray-800 p-4 flex flex-col justify-between fixed md:relative">
             <div>
                 <div class="hidden md:flex items-center mb-6">
@@ -88,7 +107,7 @@
 
                     <!-- Upgrade Section -->
                     <div class="mt-6">
-                        <h3 class="text-gray-500 uppercase text-xs px-2 mb-2">Upgrade</h3>
+                        <h3 class="text-gray -500 uppercase text-xs px-2 mb-2">Upgrade</h3>
                         <ul class="space-y-2">
                             <li>
                                 <a href="deposit.html" class="flex items-center p-2 rounded transition-colors duration-200 
@@ -124,7 +143,7 @@
                 </nav>
             </div>
 
-            <!-- Language Selector -->
+<!-- Language Selector -->
             <div class="mt-6 border-t border-gray-700 pt-4">
                 <div class="flex items-center justify-between px-2">
                     <div class="flex items-center space-x-2">
@@ -152,7 +171,10 @@
                     <h2 class="text-xl font-semibold mb-4">Attack Configuration</h2>
                     
                     <div class="flex space-x-2 mb-4">
-                        <button id="free-hub-btn" class="layer-btn bg-purple-600 text-white py-2 px-4 rounded">Gold</button>
+                        <button id="free-hub-btn" class="layer-btn bg-purple-600 text-white py-2 px-4 rounded">
+                            Gold Hub
+                        </button>
+                        
                         <button id="layer-34-btn" class="layer-btn bg-gray-600 text-white py-2 px-4 rounded">Layer 3/4</button>
                         <button id="layer-7-btn" class="layer-btn bg-gray-600 text-white py-2 px-4 rounded">Layer 7</button>
                     </div>
@@ -188,7 +210,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-4">
+<div class="mb-4">
                         <label class="block text-gray-400 mb-2" for="attack-method">Attack Method</label>
                         <select 
                             class="w-full p-2 bg-gray-700 text-white rounded" 
@@ -211,121 +233,141 @@
                         Send Attack
                     </button>
                 </div>
-        </div>
-    </div>
-
-    <script>
-      // Premium User Check Function
-function checkPremiumAccess(layer) {
-    const isPremiumUser = false; // Change to true for premium users
-
-    if (!isPremiumUser) {
-        // Create a more styled modal for premium access
-        const overlay = document.createElement('div');
-        overlay.className = `
-            fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50
-            transition-all duration-300 ease-in-out
-        `;
-        
-        overlay.innerHTML = `
-            <div class="bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4 shadow-2xl transform transition-all duration-300 ease-in-out scale-95 opacity-0">
-                <div class="flex justify-center mb-4">
-                    <i class="fas fa-lock text-6xl text-yellow-500"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-center text-yellow-500 mb-4">
-                    ${layer} Layer Access Locked
-                </h2>
-                <p class="text-center text-white mb-6">
-                    This advanced ${layer} layer attack method is exclusively available for Platinum users.
-                </p>
-                <div class="flex justify-center space-x-4">
-                    <button id="close-premium-modal" class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 transition">
-                        Cancel
-                    </button>
-                    <button id="upgrade-premium" class="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition">
-                        Upgrade to Platinum
-                    </button>
-                </div>
             </div>
-        `;
+        </div>
 
-        document.body.appendChild(overlay);
+        <script>
+            // Premium User Check Function
+            function checkPremiumAccess(layer) {
+                const isPremiumUser  = false; // Change to true for premium users
 
-        // Trigger reflow for animation
-        setTimeout(() => {
-            overlay.querySelector('div').classList.remove('scale-95', 'opacity-0');
-        }, 50);
+                if (!isPremiumUser ) {
+                    // Create a more styled modal for premium access
+                    const overlay = document.createElement('div');
+                    overlay.className = `
+                        fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50
+                        transition-all duration-300 ease-in-out
+                    `;
+                    
+                    overlay.innerHTML = `
+                        <div class="bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4 shadow-2xl transform transition-all duration-300 ease-in-out scale-95 opacity-0">
+                            <div class="flex justify-center mb-4">
+                                <i class="fas fa-lock text-6xl text-yellow-500"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-center text-yellow-500 mb-4">
+                                ${layer} Layer Access Locked
+                            </h2>
+                            <p class="text-center text-white mb-6">
+                                This advanced ${layer} layer attack method is exclusively available for Platinum users.
+                            </p>
+                            <div class="flex justify-center space-x-4">
+                                <button id="close-premium-modal" class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 transition">
+                                    Cancel
+                                </button>
+                                <button id="upgrade-premium" class="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition">
+                                    Upgrade to Platinum
+                                </button>
+                            </div>
+                        </div>
+                    `;
 
-        // Close modal functionality
-        const closeModal = () => {
-            overlay.querySelector('div').classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                document.body.removeChild(overlay);
-            }, 300);
-        };
+                    document.body.appendChild(overlay);
 
-        document.getElementById('close-premium-modal').addEventListener('click', closeModal);
-        
-        document.getElementById('upgrade-premium').addEventListener('click', () => {
-            window.location.href = 'deposit.html';
-        });
+                    // Trigger reflow for animation
+                    setTimeout(() => {
+                        overlay.querySelector('div').classList.remove('scale-95', 'opacity-0');
+                    }, 50);
 
-        // Close modal on outside click
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                closeModal();
+// Close modal functionality
+                    const closeModal = () => {
+                        overlay.querySelector('div').classList.add('scale-95', 'opacity-0');
+                        setTimeout(() => {
+                            document.body.removeChild(overlay);
+                        }, 300);
+                    };
+
+                    document.getElementById('close-premium-modal').addEventListener('click', closeModal);
+                    
+                    document.getElementById('upgrade-premium').addEventListener('click', () => {
+                        window.location.href = 'deposit.html';
+                    });
+
+                    // Close modal on outside click
+                    overlay.addEventListener('click', (e) => {
+                        if (e.target === overlay) {
+                            closeModal();
+                        }
+                    });
+
+                    return false;
+                }
+                return true;
             }
-        });
 
-        return false;
-    }
-    return true;
-}
+            // Layer button toggle functionality
+            const layerButtons = document.querySelectorAll('.layer-btn');
+            layerButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Reset all buttons
+                    layerButtons.forEach(btn => {
+                        btn.classList.remove('bg-purple-600');
+                        btn.classList.add('bg-gray-600');
+                    });
 
-// Layer button toggle functionality
-const layerButtons = document.querySelectorAll('.layer-btn');
-layerButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        // Reset all buttons
-        layerButtons.forEach(btn => {
-            btn.classList.remove('bg-purple-600');
-            btn.classList.add('bg-gray-600');
-        });
+                    // Activate clicked button
+                    this.classList.remove('bg-gray-600');
+                    this.classList.add('bg-purple-600');
 
-        // Activate clicked button
-        this.classList.remove('bg-gray-600');
-        this.classList.add('bg-purple-600');
+                    // Premium check for Layer 3/4 and Layer 7
+                    if (this.id === 'layer-34-btn') {
+                        checkPremiumAccess('Layer 3/4');
+                    } else if (this.id === 'layer-7-btn') {
+                        checkPremiumAccess('Layer 7');
+                    }
+                });
+            });
 
-        // Premium check for Layer 3/4 and Layer 7
-        if (this.id === 'layer-34-btn') {
-            checkPremiumAccess('Layer 3/4');
-        } else if (this.id === 'layer-7-btn') {
-            checkPremiumAccess('Layer 7');
-        }
-    });
-});
+            // Show notification function
+            function showNotification(message, type) {
+                const notification = document.createElement('div');
+                notification.className = `notification show ${type}`;
+                notification.innerText = message;
 
-// Send attack button functionality
-document.getElementById('send-attack-btn').addEventListener('click', function() {
-    const freeHubBtn = document.getElementById('free-hub-btn');
-    const layer34Btn = document.getElementById('layer-34-btn');
-    const layer7Btn = document.getElementById('layer-7-btn');
+                document.body.appendChild(notification);
 
-    if (freeHubBtn.classList.contains('bg-purple-600')) {
-        // Free Hub attack
-        showNotification('Attack sent successfully on Free Hub!');
-    } else if (layer34Btn.classList.contains('bg-purple-600')) {
-        // Layer 3/4 attack
-        if (checkPremiumAccess('Layer 3/4')) {
-            showNotification('Layer 3/4 Attack initiated!', 'success');
-        }
-    } else if (layer7Btn.classList.contains('bg-purple-600')) {
-        // Layer 7 attack
-        if (checkPremiumAccess('Layer 7')) {
-            showNotification('Layer 7 Attack initiated!', 'success');
-        }
-    }
-});
-    </script>
-</body>
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 500);
+                }, 3000);
+            }
+
+            // Send attack button functionality
+            document.getElementById('send-attack-btn').addEventListener('click', function() {
+                const freeHubBtn = document.getElementById('free-hub-btn');
+                const layer34Btn = document.getElementById('layer-34-btn');
+                const layer7Btn = document.getElementById('layer-7-btn');
+
+                if (freeHubBtn.classList.contains('bg-purple-600')) {
+                    // Free Hub attack
+                    showNotification('Gold Hub attack sent successfully!', 'success');
+                    // Add specific actions for the Gold hub here
+                } else if (layer34Btn.classList.contains('bg-purple-600')) {
+                    // Layer 3/4 attack
+                    if (checkPremiumAccess('Layer 3/4')) {
+                        showNotification('Layer 3/4 Attack initiated!', 'success');
+                    }
+                } else if (layer7Btn.classList.contains('bg-purple-600')) {
+                    // Layer 7 attack
+                    if (checkPremiumAccess('Layer 7')) {
+                        showNotification('Layer 7 Attack initiated!', 'success');
+                    }
+                } else {
+                    showNotification('Please select an attack method before proceeding.', 'info');
+                }
+            });
+        </script>
+    </body>
 </html>
